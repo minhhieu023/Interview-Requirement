@@ -4,7 +4,7 @@ class Order {
   String cusPhone;
   String cusAddress;
   String model;
-  int employeeId;
+  String employeeId;
   String orderDate;
   Order(
       {this.id,

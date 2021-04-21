@@ -40,19 +40,19 @@ class _ChooseCompanyState extends State<ChooseCompany> {
                 child: ListView(
                   children: [
                     StoreComponent(
-                      id: "12134",
+                      id: "1",
                       imagePath: "assets/store.png",
                       storeName: "Điện máy xanh - Lê Văn Việt",
                       storeLocation: "196, Lê Văn Việt, P.1, HCM",
                     ),
                     StoreComponent(
-                      id: "221232",
+                      id: "2",
                       imagePath: "assets/store.png",
                       storeName: "Samsung store - Thủ Đức",
                       storeLocation: "196, Võ Văn Ngân, Thủ Đức, P.1, HCM",
                     ),
                     StoreComponent(
-                      id: "12134",
+                      id: "3",
                       imagePath: "assets/store.png",
                       storeName: "Thế giới di động - Xa lộ Hà Nội",
                       storeLocation: "233, Xa lộ Hà Nội, Thủ Đức, HCM",

@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:interview_requirement/DAL/database_helper.dart';
+import 'package:interview_requirement/Models/order.dart';
 
 class AddNewModal extends StatefulWidget {
-  AddNewModal({Key key}) : super(key: key);
+  final storeId;
+  final Function callBack;
+  AddNewModal({Key key, this.storeId, this.callBack}) : super(key: key);
 
   @override
   _AddNewModalState createState() => _AddNewModalState();
 }
 
 class _AddNewModalState extends State<AddNewModal> {
+  TextEditingController devicesController = new TextEditingController();
+  TextEditingController fullNameController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+  TextEditingController addressController = new TextEditingController();
+  final dbHelper = DatabaseHelper.instance;
+
   bool isClosedModal = false;
+
+  Future<bool> _insert() async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnModel: devicesController.text,
+      DatabaseHelper.columnName: fullNameController.text,
+      DatabaseHelper.columnPhone: phoneController.text,
+      DatabaseHelper.columnCusAddress: addressController.text,
+      DatabaseHelper.columnOrderDate: DateTime.now().toString(),
+      DatabaseHelper.columnEmployeeId: 1,
+      DatabaseHelper.columnStoreId: widget.storeId,
+    };
+    final id = await dbHelper.insert(row);
+    print('inserted row id: $id');
+    if (id.isNaN) return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +51,8 @@ class _AddNewModalState extends State<AddNewModal> {
         Padding(
             padding: EdgeInsets.all(10),
             child: TextField(
-              keyboardType: TextInputType.emailAddress,
+              controller: devicesController,
+              //keyboardType: TextInputType,
               autofocus: false,
               decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -37,6 +66,7 @@ class _AddNewModalState extends State<AddNewModal> {
             padding: EdgeInsets.all(10),
             child: TextField(
               //keyboardType: TextInputType.emailAddress,
+              controller: fullNameController,
               autofocus: false,
               decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -49,6 +79,7 @@ class _AddNewModalState extends State<AddNewModal> {
         Padding(
             padding: EdgeInsets.all(10),
             child: TextField(
+              controller: phoneController,
               keyboardType: TextInputType.number,
               autofocus: false,
               decoration: InputDecoration(
@@ -62,7 +93,7 @@ class _AddNewModalState extends State<AddNewModal> {
         Padding(
             padding: EdgeInsets.all(10),
             child: TextField(
-              keyboardType: TextInputType.emailAddress,
+              controller: addressController,
               autofocus: false,
               decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -78,8 +109,17 @@ class _AddNewModalState extends State<AddNewModal> {
               minWidth: 200.0,
               //height: 100.0,
               child: RaisedButton(
-                onPressed: () {
-                  print("Save");
+                onPressed: () async {
+                  Order order = new Order();
+                  order.cusName = fullNameController.text;
+                  order.cusPhone = phoneController.text;
+                  order.cusAddress = addressController.text;
+                  order.model = devicesController.text;
+                  order.employeeId = "1";
+                  order.orderDate = DateTime.now().toString();
+                  bool result = await _insert();
+                  Navigator.pop(context);
+                  widget.callBack();
                   showDialog<void>(
                       context: context,
                       //barrierDismissible: false, // user must tap button!
@@ -88,16 +128,17 @@ class _AddNewModalState extends State<AddNewModal> {
                           content: SingleChildScrollView(
                             child: ListBody(
                               children: <Widget>[
-                                Icon(Icons.check_circle,
-                                    color: Colors.green, size: 100),
-                                Center(child: Text('Completed!')),
+                                result
+                                    ? Icon(Icons.check_circle,
+                                        color: Colors.green, size: 100)
+                                    : Icon(Icons.close,
+                                        color: Colors.red, size: 100),
+                                Center(child: Text('Completed')),
                                 RaisedButton(
                                     child: Text("Closed"),
                                     onPressed: () {
-                                      setState(() {
-                                        isClosedModal ? false : true;
-                                      });
-                                      Navigator.of(context).pop();
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog');
                                     }),
                               ],
                             ),

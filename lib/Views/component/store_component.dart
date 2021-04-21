@@ -20,7 +20,11 @@ class _StoreComponentState extends State<StoreComponent> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "/order");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OrderScreen(storeId: widget.id)),
+        );
       },
       child: Container(
         //color: Colors.white,

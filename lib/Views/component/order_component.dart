@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interview_requirement/DAL/database_helper.dart';
 
 class OrderComponent extends StatefulWidget {
   final int id;
@@ -6,7 +7,7 @@ class OrderComponent extends StatefulWidget {
   final String cusPhone;
   final String cusAddress;
   final String model;
-  final String orderDate;
+  final DateTime orderDate;
   OrderComponent(
       {Key key,
       this.id,
@@ -22,11 +23,12 @@ class OrderComponent extends StatefulWidget {
 }
 
 class _OrderComponentState extends State<OrderComponent> {
+  final dbHelper = DatabaseHelper.instance;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "/order");
+        // Navigator.pushNamed(context, "/order");
       },
       child: Container(
         //color: Colors.white,
@@ -70,7 +72,7 @@ class _OrderComponentState extends State<OrderComponent> {
                     ]),
                   ),
                   Text(
-                    "Now, 20:35",
+                    "${widget.orderDate.toString()}",
                     style: TextStyle(color: Colors.black54),
                   )
                 ],
@@ -82,9 +84,7 @@ class _OrderComponentState extends State<OrderComponent> {
                   margin: EdgeInsets.only(right: 10),
                   height: 100,
                   width: 140,
-                  child: Image.network(
-                      "https://dienmaygiare.net/wp-content/uploads/2020/03/tivi-samsung-ua50tu8500.jpg",
-                      fit: BoxFit.fitWidth),
+                  child: Image.asset("assets/tv.jpg", fit: BoxFit.fitWidth),
                 ),
                 Container(
                   child: Column(

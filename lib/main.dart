@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:interview_requirement/Views/order_history_screen.dart';
-
 import 'Views/choose_store_screen.dart';
 import 'Views/login_screen.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
