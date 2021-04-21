@@ -77,31 +77,18 @@ class _LoginScreenState extends State<LoginScreen> {
               shrinkWrap: true,
               padding: EdgeInsets.only(left: 15.0, right: 15.0),
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    //crossAxisAlignment: CrossAxisAlignment.,
-                    children: <Widget>[
-                      Container(
-                        width: 220,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width /
-                                          6),
-                                  child: Center(
-                                      child: Text(
-                                    'LOGIN',
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w400),
-                                  ))),
-                            ]),
-                      ),
-                    ],
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Container(
+                      width: 220,
+                      child: Center(
+                          child: Text(
+                        'LOGIN',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.w400),
+                      )),
+                    ),
                   ),
                 ),
                 SizedBox(
