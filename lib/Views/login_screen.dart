@@ -8,6 +8,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController userNameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     final solgan = Padding(
@@ -20,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
-    final email = TextField(
-      keyboardType: TextInputType.emailAddress,
+    final userName = TextField(
+      controller: userNameController,
       autofocus: false,
       decoration: InputDecoration(
           prefixIcon: Icon(
@@ -32,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
           labelText: 'User name'),
     );
 
-    final pasword = TextField(
+    final password = TextField(
+      controller: passwordController,
       obscureText: true,
       keyboardType: TextInputType.visiblePassword,
       autofocus: false,
@@ -48,7 +51,34 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/store");
+          if (userNameController.text == "hieuvm" &&
+              passwordController.text == "passwor1")
+            Navigator.pushReplacementNamed(context, "/store");
+          else
+            return showDialog<void>(
+                context: context,
+                //barrierDismissible: false, // user must tap button!
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Icon(Icons.close, color: Colors.red, size: 100),
+                          Center(
+                              child: Text('Username or password is incorrect')),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('Try again'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                });
         },
         padding: EdgeInsets.all(12.0),
         color: Colors.green,
@@ -79,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 15.0),
+                    padding: EdgeInsets.only(top: 30.0),
                     child: Container(
                       width: 220,
                       child: Center(
@@ -98,11 +128,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 25.0,
                 ),
-                email,
+                userName,
                 SizedBox(
                   height: 25.0,
                 ),
-                pasword,
+                password,
                 SizedBox(
                   height: 25.0,
                 ),
